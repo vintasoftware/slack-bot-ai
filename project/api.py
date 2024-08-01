@@ -1,5 +1,4 @@
 import os
-
 from fastapi import FastAPI, Query
 from langchain import hub
 from langchain_core.output_parsers import StrOutputParser
@@ -45,12 +44,23 @@ def query_knowledge_base(query: str = Query(...)):
         return_source_documents=True,
         combine_docs_chain_kwargs={"prompt": QNA_PROMPT}
     )
- 
+   
     input = {"question": query, "chat_history": []}
     retrieved = qa.invoke(input=input)
     sources = list(set(doc.metadata.get("source") for doc in retrieved["source_documents"]))
     answer = retrieved["answer"]
-    return {"answer": answer, "links": sources}
+
+    refine_prompt_messages = [
+        (
+            "system",
+            "Based on the context provided, refine the answer to the user's question, which is about Vinta's internal documentation. Include source links whenever possible.",
+        ),
+        ("human", f"context: {format_docs(retrieved['source_documents'])} \n\n answer to user question:{answer}"),
+   ]
+
+    refined = LLM.invoke(refine_prompt_messages)
+
+    return {"answer": answer, "refined_answer": refined.content, "links": sources}
 
 if __name__ == "__main__":
     uvicorn.run(app, host="0.0.0.0", port=7999)

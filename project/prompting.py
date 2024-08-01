@@ -4,6 +4,8 @@ from langchain.prompts.chat import (
     SystemMessagePromptTemplate,
 )
 
+from langchain.prompts import PromptTemplate
+
 from langchain.chains.conversational_retrieval.base import ConversationalRetrievalChain
 
 system_template = """Use the following pieces of context to answer the user's question.
