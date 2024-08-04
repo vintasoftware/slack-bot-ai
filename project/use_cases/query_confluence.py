@@ -1,13 +1,13 @@
-
 from langchain_openai import ChatOpenAI
 from typing import Any
 
 from project.llm.prompting import QNA_PROMPT, ConversationalRetrievalChain
 from project.llm.vector_store import VectorStore
 
-class QueryConfluenceUseCase():
+
+class QueryConfluenceUseCase:
     def __init__(self, llm: ChatOpenAI):
-        self.LLM = llm 
+        self.LLM = llm
 
     @staticmethod
     def run_as_tool(query: str, llm: ChatOpenAI):
@@ -16,20 +16,25 @@ class QueryConfluenceUseCase():
     def execute(self, query: str):
         db = VectorStore()
         retriever = db.get_store().as_retriever()
-     
+
         def format_docs(docs):
-            return "\n\n".join(f"{doc.page_content}\nsource:{doc.metadata.get('source')}" for doc in docs)
+            return "\n\n".join(
+                f"{doc.page_content}\nsource:{doc.metadata.get('source')}"
+                for doc in docs
+            )
 
         qa = ConversationalRetrievalChain.from_llm(
-            llm=self.LLM, 
-            retriever=retriever, 
+            llm=self.LLM,
+            retriever=retriever,
             return_source_documents=True,
-            combine_docs_chain_kwargs={"prompt": QNA_PROMPT}
+            combine_docs_chain_kwargs={"prompt": QNA_PROMPT},
         )
-    
+
         input = {"question": query, "chat_history": []}
         retrieved = qa.invoke(input=input)
-        sources = list(set(doc.metadata.get("source") for doc in retrieved["source_documents"]))
+        sources = list(
+            set(doc.metadata.get("source") for doc in retrieved["source_documents"])
+        )
         answer = retrieved["answer"]
 
         refine_prompt_messages = [
@@ -37,10 +42,12 @@ class QueryConfluenceUseCase():
                 "system",
                 "Based on the context provided, refine the answer to the user's question, which is about Vinta's internal documentation. Include source links whenever possible.",
             ),
-            ("human", f"context: {format_docs(retrieved['source_documents'])} \n\n answer to user question:{answer}"),
+            (
+                "human",
+                f"context: {format_docs(retrieved['source_documents'])} \n\n answer to user question:{answer}",
+            ),
         ]
 
         refined = self.LLM.invoke(refine_prompt_messages)
 
         return {"answer": refined.content, "links": sources}
-

@@ -5,8 +5,10 @@ from langchain.document_loaders import ConfluenceLoader
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain.text_splitter import MarkdownHeaderTextSplitter
 
-class DataLoader():
+
+class DataLoader:
     """Create, load, save the DB using the confluence Loader"""
+
     def __init__(self, **kwargs):
         self.username = os.getenv("CONFLUENCE_USER")
         self.api_key = os.getenv("CONFLUENCE_TOKEN")
@@ -19,11 +21,11 @@ class DataLoader():
             username=self.username,
             api_key=self.api_key,
             space_key=space_key,
-            limit=50
+            limit=50,
         )
 
         docs = loader.load()
-        
+
         return docs
 
     def split_docs(self, docs):
@@ -34,7 +36,9 @@ class DataLoader():
             ("###", "H3"),
         ]
 
-        markdown_splitter = MarkdownHeaderTextSplitter(headers_to_split_on=headers_to_split_on)
+        markdown_splitter = MarkdownHeaderTextSplitter(
+            headers_to_split_on=headers_to_split_on
+        )
 
         md_docs = []
         for doc in docs:
@@ -46,10 +50,8 @@ class DataLoader():
         splitter = RecursiveCharacterTextSplitter(
             chunk_size=512,
             chunk_overlap=20,
-            separators=["\n\n", "\n", "(?<=\. )", " ", ""]
+            separators=["\n\n", "\n", "(?<=\. )", " ", ""],
         )
 
         pre_processed_docs = splitter.split_documents(md_docs)
         return pre_processed_docs
-
-  

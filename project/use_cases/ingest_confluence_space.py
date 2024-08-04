@@ -1,6 +1,7 @@
 from project.confluence import DataLoader
 from project.llm.vector_store import VectorStore
 
+
 class IngestConfluenceSpaceUseCase:
     def __init__(self, space_key: str):
         self.space_key = space_key

@@ -5,10 +5,13 @@ from langchain_community.tools import BraveSearch
 
 BRAVE_SEARCH_API_KEY = os.getenv("BRAVE_SEARCH_API_KEY")
 
-class PerformWebSearchUseCase():
+
+class PerformWebSearchUseCase:
     @staticmethod
     def run_as_tool(query: str):
-        raw_results = BraveSearch.from_api_key(api_key=BRAVE_SEARCH_API_KEY, search_kwargs={"count": 3}).run(query)
+        raw_results = BraveSearch.from_api_key(
+            api_key=BRAVE_SEARCH_API_KEY, search_kwargs={"count": 3}
+        ).run(query)
         json_results = json.loads(raw_results)
         html_formatted_answer = ""
 
@@ -19,7 +22,7 @@ class PerformWebSearchUseCase():
             <p>{snippet}</p>
             <a href="{link}">{link}</a>
             """
-            
+
             html_formatted_answer += f"{formatted_result}\n\n"
-        
+
         return md(html_formatted_answer)

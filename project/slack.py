@@ -12,8 +12,9 @@ styler = SlackStyler()
 
 app = App(
     token=os.environ.get("SLACK_BOT_TOKEN"),
-    signing_secret=os.environ.get("SLACK_SIGNING_SECRET")
+    signing_secret=os.environ.get("SLACK_SIGNING_SECRET"),
 )
+
 
 @app.event("app_mention")
 def handle_app_mentions(body, say, logger):
@@ -26,8 +27,9 @@ def handle_app_mentions(body, say, logger):
 def handle_message(message, say, logger):
     user, text = (message["user"], message["text"])
     _, *ai_messages = AnswerSlackMessageUseCase(llm_with_tools=LLM).execute(text)
-    
+
     for message in ai_messages:
-        say( styler.convert(message.content) ) if message.content else print(message)
+        say(styler.convert(message.content)) if message.content else print(message)
+
 
 slack_handler = SlackRequestHandler(app)
