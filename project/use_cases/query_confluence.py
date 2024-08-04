@@ -2,8 +2,8 @@
 from langchain_openai import ChatOpenAI
 from typing import Any
 
-from project.prompting import QNA_PROMPT, ConversationalRetrievalChain
-from project.vector_store import VectorStore
+from project.llm.prompting import QNA_PROMPT, ConversationalRetrievalChain
+from project.llm.vector_store import VectorStore
 
 class QueryConfluenceUseCase():
     def __init__(self, llm: ChatOpenAI):

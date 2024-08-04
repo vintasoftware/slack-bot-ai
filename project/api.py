@@ -24,7 +24,8 @@ def query_knowledge_base(query: str = Query(...)):
 
 @app.post("/slack/events/")
 async def slack_webhook(req: Request):
-    # sets up url verification for the slack app
+    # sets up url verification for the slack app, probably broken
+    # need to fix when running ngrok again
     challenge = req.get("challenge")
     
     if challenge:

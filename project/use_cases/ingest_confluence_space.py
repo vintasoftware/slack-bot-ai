@@ -1,6 +1,5 @@
 from project.confluence import DataLoader
-from project.slack import slack_handler
-from project.vector_store import VectorStore
+from project.llm.vector_store import VectorStore
 
 class IngestConfluenceSpaceUseCase:
     def __init__(self, space_key: str):
