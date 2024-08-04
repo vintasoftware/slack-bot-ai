@@ -9,8 +9,6 @@ readme = "README.md"
 python = "^3.10"
 fastapi = "^0.111.1"
 uvicorn = "^0.30.3"
-redis = "^5.0.7"
-redis-om = "^0.3.1"
 langchain-openai = "^0.1.17"
 tiktoken = "^0.7.0"
 atlassian-python-api = "^3.41.14"
@@ -20,6 +18,8 @@ sqlite-vss = "^0.1.2"
 lxml = "^5.2.2"
 markdownify = "^0.13.1"
 langchainhub = "^0.1.20"
+slack-bolt = "^1.19.1"
+slackstyler = "^0.0.2"
 
 
 [tool.poetry.group.dev.dependencies]
