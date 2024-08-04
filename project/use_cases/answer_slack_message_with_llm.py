@@ -1,5 +1,5 @@
 from langchain_core.messages import HumanMessage, ToolMessage
-from project.llm.gpt import query_confluence, web_search
+from project.llm.gpt import get_selected_tool
 
 
 class AnswerSlackMessageUseCase:
@@ -12,10 +12,7 @@ class AnswerSlackMessageUseCase:
         messages.append(ai_msg)
 
         for tool_call in ai_msg.tool_calls:
-            selected_tool = {
-                "query_confluence": query_confluence,
-                "web_search": web_search,
-            }[tool_call["name"].lower()]
+            selected_tool = get_selected_tool(tool_call)
             tool_output = selected_tool.invoke(tool_call["args"])
             messages.append(ToolMessage(tool_output, tool_call_id=tool_call["id"]))
 
