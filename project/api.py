@@ -1,11 +1,10 @@
-from typing import Any
 import uvicorn
 
 from dotenv import load_dotenv
 
 load_dotenv()
 
-from fastapi import FastAPI, Query, Request, Body
+from fastapi import FastAPI, Query, Request
 
 from project.slack import slack_handler
 from project.llm.gpt import GPT_4o_MINI as LLM

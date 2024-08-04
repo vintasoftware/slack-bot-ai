@@ -1,7 +1,7 @@
 from langchain_openai import ChatOpenAI
-from typing import Any
+from langchain.chains.conversational_retrieval.base import ConversationalRetrievalChain
 
-from project.llm.prompting import QNA_PROMPT, ConversationalRetrievalChain
+from project.llm.prompting import QNA_PROMPT
 from project.llm.vector_store import VectorStore
 
 

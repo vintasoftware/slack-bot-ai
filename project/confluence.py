@@ -1,6 +1,5 @@
 import os
 
-from langchain_community.vectorstores import SQLiteVSS
 from langchain.document_loaders import ConfluenceLoader
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain.text_splitter import MarkdownHeaderTextSplitter
