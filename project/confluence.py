@@ -28,7 +28,6 @@ class DataLoader:
         return docs
 
     def split_docs(self, docs):
-        # Markdown
         headers_to_split_on = [
             ("#", "H1"),
             ("##", "H2"),
@@ -40,6 +39,7 @@ class DataLoader:
         )
 
         md_docs = []
+        
         for doc in docs:
             md_doc = markdown_splitter.split_text(doc.page_content)
             for i in range(len(md_doc)):
