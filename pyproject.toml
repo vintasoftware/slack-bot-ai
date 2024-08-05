@@ -25,6 +25,7 @@ slackstyler = "^0.0.2"
 [tool.poetry.group.dev.dependencies]
 ruff = "^0.5.4"
 black = "^24.4.2"
+datamodel-code-generator = "^0.25.8"
 
 [build-system]
 requires = ["poetry-core"]
