@@ -11,7 +11,7 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get update && apt-get install -y --no-ins
     && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/* && \
-    pip install --no-cache-dir poetry==1.4.0 setuptools && poetry config virtualenvs.create false
+    pip install --no-cache-dir poetry==1.8.3 setuptools && poetry config virtualenvs.create false
 
 
 RUN pip install --upgrade pip && pip install --no-cache-dir poetry gunicorn uvicorn && poetry config virtualenvs.create false
