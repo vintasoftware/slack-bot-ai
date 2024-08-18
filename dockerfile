@@ -28,4 +28,4 @@ COPY . /app/
 
 ENV PORT=7999
 
-ENTRYPOINT ["uvicorn", "project.api:app", "--host", "0.0.0.0",  "--port", "$PORT", "--reload"]
+ENTRYPOINT ["sh", "-c", "uvicorn project.api:app --host 0.0.0.0 --port $PORT --reload"]
