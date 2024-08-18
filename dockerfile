@@ -26,4 +26,6 @@ RUN poetry install --no-dev
 FROM install AS runtime
 COPY . /app/
 
-ENTRYPOINT ["uvicorn", "project.api:app", "--host", "0.0.0.0",  "--port", "7999", "--reload"]
+ENV PORT=7999
+
+ENTRYPOINT ["uvicorn", "project.api:app", "--host", "0.0.0.0",  "--port", "$PORT", "--reload"]
