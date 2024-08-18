@@ -4,7 +4,8 @@ services:
     image: slackbot-ai:latest
     build: .
     ports:
-      - "7999:7999"
+      - "${PORT:-7999}:${PORT:-7999}"
+      - "${DEBUG_PORT:-3000}:${DEBUG_PORT:-3000}"
     env_file: .env
     tty: true
     stdin_open: true
