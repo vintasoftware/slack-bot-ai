@@ -1,0 +1,15 @@
+services:
+  slackbot-ai:
+    container_name: slack-bot-ai
+    image: slackbot-ai:latest
+    build: .
+    ports:
+      - "${PORT:-7999}:${PORT:-7999}"
+      - "${DEBUG_PORT:-3000}:${DEBUG_PORT:-3000}"
+    env_file: .env
+    tty: true
+    stdin_open: true
+    volumes:
+      - type: bind
+        source: .
+        target: /app/
